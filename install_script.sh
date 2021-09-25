@@ -20,6 +20,8 @@ function install-python3.7() {
     sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
 
     sudo update-alternatives --set python3 /usr/bin/python3.7
+
+    sudo apt install pip -y
 }
 
 function install-powerlevel10k() {
