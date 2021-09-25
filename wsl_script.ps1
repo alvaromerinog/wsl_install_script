@@ -1,12 +1,16 @@
-function PS-Admin {
-    Start-Process powershell.exe -Verb RunAs
-    Set-ExecutionPolicy Unrestricted -force
-}
-
 function Activate-WSL {
-    Write-Host "`nThe computer is going to be restarted"
-    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /Quiet
+    $title    = 'The computer is going to be restarted'
+    $question = 'Are you sure you want to proceed?'
+    $choices  = '&Yes', '&No'
+
+    $decision = $Host.UI.PromptForChoice($title, $question, $choices, 0)
+    if ($decision -eq 0) {
+        dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+        dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /Quiet
+    } else {
+        Main
+    }
+    
 }
 
 function Update-WSL {
@@ -19,22 +23,17 @@ function Update-WSL {
 
 function Main {
     Write-Host "============= Pick an option=============="
-    Write-Host "`t1. Configure Powershell"
-    Write-Host "`t2. Configure WSL characteristics (Restart)"
-    Write-Host "`t3. Update WSL to WSL2"
+    Write-Host "`t1. Configure WSL characteristics (Restart)"
+    Write-Host "`t2. Update WSL to WSL2"
     Write-Host "`t0. Exit"
     Write-Host "========================================================"
     $choice = Read-Host "`nEnter Choice: "
 
     switch ($choice) {
     '1'{
-        PS-Admin
-        Main
+        Activate-WSL
     }
     '2'{
-        Activate-WSL -Comfirm
-    }
-    '3'{
         Update-WSL
         Main
     }
@@ -44,7 +43,15 @@ function Main {
     }
 }
 
+function Set-Admin {
+  $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+  $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+}
+
+if ((Set-Admin) -eq $false)  {
+    $DesktopPath = [Environment]::GetFolderPath("Desktop")
+    PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& {Start-Process PowerShell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File ""$DesktopPath\wsl_script.ps1""' -Verb RunAs}"
+    exit
+}
+
 Main
-
-
-
