@@ -1,9 +1,10 @@
-# WSL2 install script
-Script to install the essentials tools in a wsl2 ubuntu machine.
+# WSL2 install scripts
+* wsl_install_script.ps1 --> Script to install WSL2.
+* install_script.sh --> Script to install the essentials tools in a wsl2 ubuntu machine.
 
 # Instructions
 ## Basic usage
-1. Copy the script in your home directory.
+1. Copy the install_script.sh in your home directory.
 2. Run the following command to allow the execution of the script.
 ```bash
 chmod u+x install_script.sh
