@@ -45,11 +45,18 @@ function Install-Fonts {
     Write-Host "`nMeslo fonts installed"
 }
 
+function Install-Ubuntu {
+    wsl --install -d Ubuntu
+    Write-Host "`nUbuntu installed"
+}
+
 function Main {
     Write-Host "============= Pick an option=============="
     Write-Host "`t1. Configure WSL characteristics (Restart)"
-    Write-Host "`t2. Update WSL to WSL2"
-    Write-Host "`t3. Install Meslo fonts"
+    Write-Host "`t2. Update and install everything"
+    Write-Host "`t3. Update WSL to WSL2"
+    Write-Host "`t4. Install Ubuntu"
+    Write-Host "`t5. Install Meslo fonts"
     Write-Host "`t0. Exit"
     Write-Host "========================================================"
     $choice = Read-Host "`nEnter Choice: "
@@ -60,9 +67,19 @@ function Main {
     }
     '2'{
         Update-WSL
+        Install-Ubuntu
+        Install-Fonts
         Main
     }
     '3'{
+        Update-WSL
+        Main
+    }
+    '4'{
+        Install-Ubuntu
+        Main
+    }
+    '5'{
         Install-Fonts
         Main
     }
