@@ -65,7 +65,6 @@ function install-awscli() {
     unzip awscliv2.zip
     sudo ./aws/install
     sudo rm -r ./awscliv2.zip
-    sudo rm -r ./aws
 }
 
 function fix-apt_pkg() {
