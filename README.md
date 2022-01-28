@@ -10,13 +10,11 @@
 3. The script will be executed with admin privileges.
 4. Select your choice.
 
-### Fixing problems
+### 🐛 Known bugs
 
 * **Permission denied**. 
 
 **Description**: The powershell script window is closed after be opened. 
-
-*Note*: It appears to occurs sometimes without a homogeneous pattern to some users.
 
 **Solution**:
 
@@ -47,7 +45,7 @@ chmod u+x install_script.sh
 ```
 4. Select your choice (The first one install every other one).
 
-### Fixing problems
+### 🐛 Known bugs
 
 * **apt_pkg error**. 
 
