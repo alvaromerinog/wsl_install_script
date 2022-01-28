@@ -10,6 +10,30 @@
 3. The script will be executed with admin privileges.
 4. Select your choice.
 
+### Fixing problems
+
+* **Permission denied**. 
+
+**Description**: The powershell script window is closed after be opened. 
+
+*Note*: It appears to occurs sometimes without a homogeneous pattern to some users.
+
+**Solution**:
+
+Execute the next command as administrator:
+
+```ps
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+```
+
+**Undo solution**:
+
+Execute the next command as administrator:
+
+```ps
+Set-ExecutionPolicy -ExecutionPolicy Undefined
+```
+
 ## Bash script
 ### Basic usage
 1. Copy the install_script.sh in your home directory.
@@ -25,4 +49,8 @@ chmod u+x install_script.sh
 
 ### Fixing problems
 
-If executing an unknown command in the terminal gives an apt_pkg error, execute the penultimate option "Fix APT PKG".
+* **apt_pkg error**. 
+
+**Description**: Executing an unknown command in the terminal gives an apt_pkg error
+
+**Solution**: Execute the penultimate option of the script "Fix APT PKG".
