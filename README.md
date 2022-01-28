@@ -10,7 +10,7 @@
 3. The script will be executed with admin privileges.
 4. Select your choice.
 
-### 🐛 Known bugs
+### Known bugs 🐛
 
 * **Permission denied**. 
 
@@ -45,7 +45,7 @@ chmod u+x install_script.sh
 ```
 4. Select your choice (The first one install every other one).
 
-### 🐛 Known bugs
+### Known bugs 🐛
 
 * **apt_pkg error**. 
 
