@@ -94,9 +94,8 @@ function Set-Admin {
   $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
 }
 
-$DesktopPath = [Environment]::GetFolderPath("Desktop")
 if ((Set-Admin) -eq $false)  {
-    PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& {Start-Process PowerShell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File ""$DesktopPath\wsl_script.ps1""' -Verb RunAs}"
+    PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& {Start-Process PowerShell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File ""$PSScriptRoot\wsl_script.ps1""' -Verb RunAs}"
     exit
 }
 
