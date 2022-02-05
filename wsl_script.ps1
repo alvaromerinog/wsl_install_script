@@ -22,14 +22,14 @@ function Update-WSL {
 }
 
 function Install-Fonts {
-    mkdir $DesktopPath\Fonts
-    Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf" -Outfile $DesktopPath\Fonts\MesloLGS_NF_Regular.ttf
-    Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf" -Outfile $DesktopPath\Fonts\MesloLGS_NF_Bold.ttf
-    Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf" -Outfile $DesktopPath\Fonts\MesloLGS_NF_Italic.ttf
-    Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf" -Outfile $DesktopPath\Fonts\MesloLGS_NF_Bold_Italic.ttf
+    mkdir $PSScriptRoot\Fonts
+    Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf" -Outfile $PSScriptRoot\Fonts\MesloLGS_NF_Regular.ttf
+    Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf" -Outfile $PSScriptRoot\Fonts\MesloLGS_NF_Bold.ttf
+    Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf" -Outfile $PSScriptRoot\Fonts\MesloLGS_NF_Italic.ttf
+    Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf" -Outfile $PSScriptRoot\Fonts\MesloLGS_NF_Bold_Italic.ttf
     
 
-    $FontsFolder = "$DesktopPath\Fonts"
+    $FontsFolder = "$PSScriptRoot\Fonts"
     $FONTS = 0x14
     $CopyOptions = 4 + 16;
     $objShell = New-Object -ComObject Shell.Application
@@ -41,7 +41,7 @@ function Install-Fonts {
         $CopyFlag = [String]::Format("{0:x}", $CopyOptions);
         $objFolder.CopyHere($File.fullname,$CopyFlag)
     }
-    Remove-Item $DesktopPath\Fonts -Recurse -Confirm:$False
+    Remove-Item $PSScriptRoot\Fonts -Recurse -Confirm:$False
     Write-Host "`nMeslo fonts installed"
 }
 
