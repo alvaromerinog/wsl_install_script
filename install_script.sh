@@ -2,32 +2,40 @@
 # Script to install and configure python 3.7 in Ubuntu 20.04 and 
 # install and configure the powerlevel10k terminal theme. 
 
-
 function install-python3.7() {
-    sudo apt update
-    sudo apt install python -y
-    sudo apt install software-properties-common -y
+    sudo apt install python3 software-properties-common -y
     sudo add-apt-repository ppa:deadsnakes/ppa -y
     sudo apt install python3.7 -y
-    sudo apt autoremove -y
 
     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.8 2
-
     sudo update-alternatives --set python /usr/bin/python3.7
 
     sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
     sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
-
     sudo update-alternatives --set python3 /usr/bin/python3.7
 
     sudo apt install pip -y
 }
 
+function install-virtualenvwrapper() {
+    sudo apt install virtualenvwrapper -y
+    echo -e '\nsource /usr/share/virtualenvwrapper/virtualenvwrapper.sh' >> ~/.bashrc
+    if [ -f ~/.zshrc ]; then
+        echo -e '\nsource /usr/share/virtualenvwrapper/virtualenvwrapper.sh' >> ~/.zshrc
+    fi
+}
+
+function install-awscli() {
+    sudo apt install curl zip unzip jq -y
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    sudo ./aws/install
+    sudo rm -r ./awscliv2.zip
+}
+
 function install-powerlevel10k() {
-    sudo apt update
     sudo apt install zsh git curl -y
-    sudo apt autoremove -y
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
@@ -40,38 +48,20 @@ function install-powerlevel10k() {
     curl -L -O https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
     mv *.ttf ~/.fonts
     fc-cache -fv
-
-    zsh
-}
-
-function install-virtualenvwrapper() {
-    sudo apt install virtualenvwrapper -y
-    echo -e '\nsource /usr/share/virtualenvwrapper/virtualenvwrapper.sh' >> ~/.bashrc
-    if [ -f ~/.zshrc ]; then
-        echo -e '\nsource /usr/share/virtualenvwrapper/virtualenvwrapper.sh' >> ~/.zshrc
-    fi
 }
 
 function install-fzf() {
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     cd ~/.fzf/
     ./install
-}
-
-function install-awscli() {
-    sudo apt update
-    sudo apt install curl zip unzip jq -y
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    unzip awscliv2.zip
-    sudo ./aws/install
-    sudo rm -r ./awscliv2.zip
+    cd
 }
 
 function fix-apt_pkg() {
-    sudo apt remove python3-apt
+    sudo apt remove python3-apt -y
     sudo apt autoremove -y
     sudo apt autoclean -y
-    sudo apt install python3-apt
+    sudo apt install python3-apt -y
 }
 
 echo "Select an option:"
@@ -80,6 +70,7 @@ do
     case $choice in
         "Install everything")
             echo "Installing and configuring everything..."
+            sudo apt update
             install-python3.7
             install-virtualenvwrapper
             install-fzf
@@ -88,14 +79,17 @@ do
             ;;
         "Install Python 3.7")
             echo "Installing and configuring Python 3.7..."
+            sudo apt update
             install-python3.7
             ;;
         "Install VirtualEnvWrapper")
             echo "Installing and configuring VirtualEnvWrapper..."
+            sudo apt update
             install-virtualenvwrapper
             ;;
         "Install Fzf")
             echo "Installing and configuring Fzf..."
+            sudo apt update
             install-fzf
             ;;
         "Install AWSCLI2")
@@ -104,10 +98,12 @@ do
             ;;
         "Install Powerlevel10k")
             echo "Installing and configuring powerlevel10k..."
+            sudo apt update
             install-powerlevel10k
             ;;
         "Fix APT PKG")
             echo "Fixing APT PKG..."
+            sudo apt update
             fix-apt_pkg
             ;;
         "Exit")
