@@ -12,9 +12,9 @@
 
 ### Known bugs 🐛
 
-* **Permission denied**. 
+* **Permission denied**.
 
-**Description**: The powershell script window is closed after be opened. 
+**Description**: The powershell script window is closed after be opened.
 
 **Solution**:
 
@@ -47,7 +47,7 @@ chmod u+x install_script.sh
 
 ### Known bugs 🐛
 
-* **apt_pkg error**. 
+* **apt_pkg error**.
 
 **Description**: Executing an unknown command in the terminal gives an apt_pkg error
 
