@@ -34,6 +34,14 @@ function install-awscli() {
     sudo rm -r ./awscliv2.zip
 }
 
+function install-awssam() {
+    sudo apt install unzip -y
+    wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+    unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+    sudo ./sam-installation/install
+    sudo rm -r aws-sam-cli-linux-x86_64.zip ./sam-installation
+}
+
 function install-powerlevel10k() {
     sudo apt install zsh git curl -y
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -65,7 +73,7 @@ function fix-apt_pkg() {
 }
 
 echo "Select an option:"
-select choice in "Install everything" "Install Python 3.7" "Install VirtualEnvWrapper" "Install Fzf" "Install AWSCLI2"  "Install Powerlevel10k" "Fix APT PKG" "Exit"
+select choice in "Install everything" "Install Python 3.7" "Install VirtualEnvWrapper" "Install Fzf" "Install AWSCLI2" "Install AWS SAM" "Install Powerlevel10k" "Fix APT PKG" "Exit"
 do
     case $choice in
         "Install everything")
@@ -75,6 +83,7 @@ do
             install-virtualenvwrapper
             install-fzf
             install-awscli
+            install-awssam
             install-powerlevel10k
             ;;
         "Install Python 3.7")
@@ -95,6 +104,10 @@ do
         "Install AWSCLI2")
             echo "Installing awscli 2 and dependencies..."
             install-awscli
+            ;;
+        "Install AWS SAM")
+            echo "Installing AWS SAM and dependencies..."
+            install-awssam
             ;;
         "Install Powerlevel10k")
             echo "Installing and configuring powerlevel10k..."
