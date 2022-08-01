@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script to install and configure python 3.7 in Ubuntu 20.04 and
+# Script to install and configure python 3.7 in Ubuntu 20.04/22.04 and
 # install and configure the powerlevel10k terminal theme.
 
 function install-python3.7() {
