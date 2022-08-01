@@ -49,6 +49,6 @@ chmod u+x install_script.sh
 
 * **apt_pkg error**.
 
-**Description**: Executing an unknown command in the terminal gives an apt_pkg error
+**Description**: Executing an unknown command in the terminal gives an apt_pkg error. **This bug not happens if python3.7 is not set as default**
 
 **Solution**: Execute the penultimate option of the script "Fix APT PKG".
