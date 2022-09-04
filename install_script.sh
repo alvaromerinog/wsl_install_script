@@ -56,11 +56,16 @@ function install-fzf() {
 }
 
 function fix-apt_pkg() {
-    #DEPRECATED Not applies if python3.7 is not set as default
-    sudo apt remove python3-apt -y
-    sudo apt autoremove -y
-    sudo apt autoclean -y
-    sudo apt install python3-apt -y
+    # DEPRECATED Not applies if python3.7 is not set as default
+    echo "DEPRECATED Not applies if python3.7 is not set as default"
+    read -p "Continue? [y/n]" -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        sudo apt remove python3-apt -y
+        sudo apt autoremove -y
+        sudo apt autoclean -y
+        sudo apt install python3-apt -y
+    fi
 }
 
 sudo apt update
