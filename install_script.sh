@@ -1,21 +1,11 @@
 #!/bin/bash
-# Script to install and configure python 3.7 in Ubuntu 20.04 and
+# Script to install and configure python 3.7 in Ubuntu 20.04/22.04 and
 # install and configure the powerlevel10k terminal theme.
 
 function install-python3.7() {
-    sudo apt install python3 software-properties-common -y
+    sudo apt install software-properties-common -y
     sudo add-apt-repository ppa:deadsnakes/ppa -y
-    sudo apt install python3.7 -y
-
-    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
-    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.8 2
-    sudo update-alternatives --set python /usr/bin/python3.7
-
-    sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
-    sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
-    sudo update-alternatives --set python3 /usr/bin/python3.7
-
-    sudo apt install pip -y
+    sudo apt install pip python3.7 python3.7-distutils -y
 }
 
 function install-virtualenvwrapper() {
@@ -66,19 +56,25 @@ function install-fzf() {
 }
 
 function fix-apt_pkg() {
-    sudo apt remove python3-apt -y
-    sudo apt autoremove -y
-    sudo apt autoclean -y
-    sudo apt install python3-apt -y
+    # DEPRECATED Not applies if python3.7 is not set as default
+    echo "DEPRECATED Not applies if python3.7 is not set as default"
+    read -p "Continue? [y/n]" -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        sudo apt remove python3-apt -y
+        sudo apt autoremove -y
+        sudo apt autoclean -y
+        sudo apt install python3-apt -y
+    fi
 }
 
+sudo apt update
 echo "Select an option:"
 select choice in "Install everything" "Install Python 3.7" "Install VirtualEnvWrapper" "Install Fzf" "Install AWSCLI2" "Install AWS SAM" "Install Powerlevel10k" "Fix APT PKG" "Exit"
 do
     case $choice in
         "Install everything")
             echo "Installing and configuring everything..."
-            sudo apt update
             install-python3.7
             install-virtualenvwrapper
             install-fzf
@@ -88,17 +84,14 @@ do
             ;;
         "Install Python 3.7")
             echo "Installing and configuring Python 3.7..."
-            sudo apt update
             install-python3.7
             ;;
         "Install VirtualEnvWrapper")
             echo "Installing and configuring VirtualEnvWrapper..."
-            sudo apt update
             install-virtualenvwrapper
             ;;
         "Install Fzf")
             echo "Installing and configuring Fzf..."
-            sudo apt update
             install-fzf
             ;;
         "Install AWSCLI2")
@@ -111,12 +104,10 @@ do
             ;;
         "Install Powerlevel10k")
             echo "Installing and configuring powerlevel10k..."
-            sudo apt update
             install-powerlevel10k
             ;;
         "Fix APT PKG")
             echo "Fixing APT PKG..."
-            sudo apt update
             fix-apt_pkg
             ;;
         "Exit")
