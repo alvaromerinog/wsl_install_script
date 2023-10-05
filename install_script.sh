@@ -1,11 +1,18 @@
 #!/bin/bash
-# Script to install and configure python 3.7 in Ubuntu 20.04/22.04 and
+# Script to install and configure pyenv
 # install and configure the powerlevel10k terminal theme.
+# Install other tools like fzf or aws tooling
 
-function install-python3.7() {
-    sudo apt install software-properties-common -y
-    sudo add-apt-repository ppa:deadsnakes/ppa -y
-    sudo apt install pip python3.7 python3.7-distutils -y
+function install-pyenv() {
+    sudo  -y
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+    echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+    echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+    if [ -f ~/.zshrc ]; then
+        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshhrc
+        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshhrc
+        echo 'eval "$(pyenv init -)"' >> ~/.zshhrc
+    fi
 }
 
 function install-virtualenvwrapper() {
@@ -17,7 +24,6 @@ function install-virtualenvwrapper() {
 }
 
 function install-awscli() {
-    sudo apt install curl zip unzip jq -y
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     unzip awscliv2.zip
     sudo ./aws/install
@@ -25,7 +31,6 @@ function install-awscli() {
 }
 
 function install-awssam() {
-    sudo apt install unzip -y
     wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
     unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
     sudo ./sam-installation/install
@@ -33,7 +38,7 @@ function install-awssam() {
 }
 
 function install-powerlevel10k() {
-    sudo apt install zsh git curl -y
+    sudo apt install zsh -y
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
@@ -55,36 +60,25 @@ function install-fzf() {
     cd
 }
 
-function fix-apt_pkg() {
-    # DEPRECATED Not applies if python3.7 is not set as default
-    echo "DEPRECATED Not applies if python3.7 is not set as default"
-    read -p "Continue? [y/n]" -n 1 -r
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        sudo apt remove python3-apt -y
-        sudo apt autoremove -y
-        sudo apt autoclean -y
-        sudo apt install python3-apt -y
-    fi
-}
-
 sudo apt update
+# Install basic tooling
+sudo apt install git curl zip unzip jq -y
 echo "Select an option:"
-select choice in "Install everything" "Install Python 3.7" "Install VirtualEnvWrapper" "Install Fzf" "Install AWSCLI2" "Install AWS SAM" "Install Powerlevel10k" "Fix APT PKG" "Exit"
+select choice in "Install everything" "Install pyenv" "Install VirtualEnvWrapper" "Install Fzf" "Install AWSCLI2" "Install AWS SAM" "Install Powerlevel10k" "Fix APT PKG" "Exit"
 do
     case $choice in
         "Install everything")
             echo "Installing and configuring everything..."
-            install-python3.7
+            install-pyenv
             install-virtualenvwrapper
             install-fzf
             install-awscli
             install-awssam
             install-powerlevel10k
             ;;
-        "Install Python 3.7")
-            echo "Installing and configuring Python 3.7..."
-            install-python3.7
+        "Install pyenv)
+            echo "Installing and configuring pyenv..."
+            install-pyenv
             ;;
         "Install VirtualEnvWrapper")
             echo "Installing and configuring VirtualEnvWrapper..."
