@@ -9,9 +9,9 @@ function install-pyenv() {
     echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
     echo 'eval "$(pyenv init -)"' >> ~/.bashrc
     if [ -f ~/.zshrc ]; then
-        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshhrc
-        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshhrc
-        echo 'eval "$(pyenv init -)"' >> ~/.zshhrc
+        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+        echo 'eval "$(pyenv init -)"' >> ~/.zshrc
     fi
 }
 
