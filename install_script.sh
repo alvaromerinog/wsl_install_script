@@ -64,7 +64,7 @@ sudo apt update
 # Install basic tooling
 sudo apt install git curl zip unzip jq -y
 echo "Select an option:"
-select choice in "Install everything" "Install pyenv" "Install VirtualEnvWrapper" "Install Fzf" "Install AWSCLI2" "Install AWS SAM" "Install Powerlevel10k" "Fix APT PKG" "Exit"
+select choice in "Install everything" "Install pyenv" "Install VirtualEnvWrapper" "Install Fzf" "Install AWSCLI2" "Install AWS SAM" "Install Powerlevel10k" "Exit"
 do
     case $choice in
         "Install everything")
@@ -99,10 +99,6 @@ do
         "Install Powerlevel10k")
             echo "Installing and configuring powerlevel10k..."
             install-powerlevel10k
-            ;;
-        "Fix APT PKG")
-            echo "Fixing APT PKG..."
-            fix-apt_pkg
             ;;
         "Exit")
             echo "My job here is done."
